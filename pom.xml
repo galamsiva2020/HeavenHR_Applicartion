@@ -50,7 +50,7 @@
                 <executions>
                     <execution>
                         <goals>
-                            <goal>one-jar</goal>
+                            <goal>one-war</goal>
                         </goals>
                     </execution>
                 </executions>
