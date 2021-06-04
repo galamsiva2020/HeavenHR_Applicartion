@@ -1,0 +1,20 @@
+version: 0.2
+phases:
+  install:
+    runtime-versions:
+      java: 1.8
+  build:
+    commands:
+      - echo Build started on `date`
+      - mvn install
+      - mvn test 
+      - mvn cobertura:cobertura
+      - java -jar heavenhr-task-1.0-SNAPSHOT.one-jar.jar
+  post_build:
+    commands:
+      - echo Build completed on `date`
+      - mvn package
+artifacts:
+  files:
+    - target/heavenhr-task-1.0-SNAPSHOT.one-jar.jar
+  discard-paths: yes
