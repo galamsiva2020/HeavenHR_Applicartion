@@ -1,3 +1,7 @@
+/**
+* @Author sivakrishna Galam
+*
+**/
 provider "aws" {
   region     = "ap-south-1"
   access_key = "AKIA2O3EPKNNRWHUK7JY"
@@ -83,7 +87,7 @@ resource "aws_route_table_association" "as_2" {
   route_table_id = aws_route_table.rt2.id
 }
 resource "aws_security_group" "sg" {
-  name        = "first-SG"
+  name        = "HeavenHR-SG"
   description = "Allow TLS inbound traffic"
   vpc_id      = aws_vpc.vpc.id
 
@@ -103,7 +107,7 @@ resource "aws_security_group" "sg" {
   }
 
   tags = {
-    Name = "first-SG"
+    Name = "HeavenHR-SG"
   }
 }
 
