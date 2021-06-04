@@ -19,6 +19,6 @@ resource "aws_s3_bucket_object" "object" {
 
 resource "null_resource" "multiple" {
   provisioner "local-exec" {
-    command = "aws s3 sync E:\\SivaPhotos  s3://my-bucket-2021-29-05"
+    command = "aws s3 sync C://Windows//System32//config//systemprofile//AppData//Local//Jenkins//.jenkins//workspace//TestHeaven_AWS//target//heavenhr-task-1.0-SNAPSHOT.one-jar.jar  s3://my-bucket-2021-29-05"
   }
 }
