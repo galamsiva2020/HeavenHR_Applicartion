@@ -1,0 +1,60 @@
+/**
+* @Author
+* Sivakrishna Galam
+**/
+   pipeline {
+    agent any
+       triggers{
+           pollSCM('* * * * *')
+           cron('30 00 * * *')
+       }
+	environment {
+        MAVEN_HOME = tool('maven')
+    }
+
+	stages {
+        stage('Git checkout') {
+            steps {
+               git credentialsId: 'GitHub', url: 'https://github.com/galamsiva2020/HeavenHR_Applicartion.git'   
+               }
+        }
+		stage('Maven Build'){
+		steps{
+		    sh '${MAVEN_HOME}/bin/mvn -B verify'
+           }
+			}
+			
+		stage('JunitTestResults') {
+		steps{
+	        junit '**/target/surefire-reports/TEST-*.xml'
+              archiveArtifacts 'target/*.jar'
+			  }
+         }
+         stage('Sonarqube') {
+            environment {
+        scannerHome = tool 'SonarQubeScanner'
+    }
+    steps {
+        withSonarQubeEnv('sonarqube') {
+            sh "${scannerHome}/bin/sonar-scanner"
+        }
+        timeout(time: 10, unit: 'MINUTES') {
+            waitForQualityGate abortPipeline: true
+        }
+    }
+}
+
+         stage('Email Notification'){
+		    steps{
+		        emailext body: '''Hi ,
+                    Welcome to HeavenHR Team
+                     Thanks
+                     Siva.
+               ''', subject: 'JenkinsPipeline_Build', to: 'sgalam90@gmail.com'
+		    }
+    }
+    
+    }
+}
+
+ 
